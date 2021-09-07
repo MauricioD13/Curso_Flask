@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% import 'macros.html' as macros %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %}
+    {{super()}}
+    Bienvenidos 
+{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        {% if username %}
+            <h1> Bienvenido {{ username.capitalize()}}</h1>
+        {% else %}
+            <h1> Bienvenido </h1>
+        {% endif %}
+    </div>
+    <div class='jumbotron text-center'>
+        
+        {% if user_ip %}
+            <h3>Hello World Platzi, tu IP es {{user_ip}}</h3>
+        {% else %}
+            <a href="{{ url_for('index') }}">Ir a inicio</a>
+        {% endif %}
+    </div>
+    <div class= "container">
+        <!--<form action="{{url_for('hello')}}" method=POST>
+            {{ login_form.username }}
+            {{ login_form.username.label }}
+        </form>-->
+        {{ wtf.quick_form(login_form) }}
+    </div>
+    <div class='container-sm border'>
+        <div class="well well-lg">
+            <ul>
+                <div class="row">
+                    {%for text in to_do %}
+                        <div class="col-sm-4">
+                            {{macros.render_todo(text)}}  
+                        </div>
+                    {% endfor %}
+                </div>
+            </ul>
+            
+        </div>
+    </div>
+{% endblock %}
