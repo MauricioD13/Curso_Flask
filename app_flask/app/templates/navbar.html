@@ -19,9 +19,9 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="{{ url_for('index') }}">
-                <img src="{{ url_for('static', filename='images/platzi_icon.jpeg') }}"
+                <img src="{{ url_for('static', filename='images/shuriken.png') }}"
                      style="max-width: 48px"
-                     alt="Platzi logo">
+                     alt="Shuriken logo">
             </a>
         </div>
 
@@ -29,6 +29,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="{{ url_for('index') }}">Inicio</a></li>
                 <li><a href="https://platzi.com" target="_blank">Platzi</a></li>
+                <li><a href="{{url_for('serv_error') }}">Error-500</a></li>
             </ul>
         </div>
     </div>

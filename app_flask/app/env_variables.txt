@@ -1,0 +1,4 @@
+FLASK_APP=main.py
+FLASK_DEBUG=1
+FLASK_ENV=development
+GOOGLE_CLOUD_PROJECT=todo-flask-325322

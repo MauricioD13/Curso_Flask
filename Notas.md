@@ -145,5 +145,62 @@ Por defecto las rutas en flask aceptan el método GET y para poder aceptar mas m
 
                 @app.route('/hello', methods = ['GET','POST'])
         
-# Pruebas basicas Flask-testing
+# App factory
 
+Funcion que regresa la nueva app, dependiendo de lo que se necesite:
+
+- Produccion
+- Desarrollo
+
+![title](org_directories.png)
+
+# Blueprints
+
+Def: 
+Son una serie de rutas que podemos integrar en nuestra aplicacion pero en otro directorio
+es decir, me va a permitir modular la aplicación en pequeñas aplicaciones que hagan cosas específicas
+como autenticación o la parte de welcome, o si tenemos un dashboard de tareas por ejemplo también
+crearíamos un blueprint para las tareas específicas y es más fácil de manejar.
+Es una pequeña aplciaciones de flask que tiene rutas, vistas, carpetas que debe ser importada desde una aplicacion de flask
+
+Es decir que sirve para modularizar una aplicación de flask:
+
+- Blueprint -> Auth
+        - Vista de login
+
+Debido a que los blueprints son aplicaciones que se encargan de pequeñas cosas es necesario que registrar el blueprint despues de crear la app
+
+                app.register_blueprint(auth)
+        
+# Bases de datos
+
+Flask no tiene ORM (Sistema de conversion de base de datos a POO)
+
+Debido a esto flask puede usar cualquier base de datos solo hay que hacer la implementacion
+
+Extension de SQL para manera bases de datos:
+                SQLAlchemy
+
+Ejemplo en con firestore de GCP
+
+# GCP
+
+1. Crear proyecto en GCP e iniciar una BD en firestore.
+2. instalar el SDK de gcloud
+3. hacer login desde la terminal: gcloud auth login
+4. hacer login application-default: gcloud auth 
+5. application-default login
+6. inicializar: gcloud init
+7. seguir las instrucciones y elegir el proyecto que creamos en GCP.
+8. Ambiente de gcloud configurado y conectado a nuestra aplicación.
+
+# Firestore
+
+                export GOOGLE_CLOUD_PROJECT='ID del proyecto'
+
+# Flask-login
+
+1. Implementar login manager para inicializar la app
+   1. En el archivo __init__ de la aplicacion
+   2. Instanciar la clase y decirle la ruta donde se hara el login('auth.login' en nuestro caso)
+2. Cargar al usuario
