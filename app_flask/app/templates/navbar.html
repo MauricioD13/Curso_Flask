@@ -30,6 +30,12 @@
                 <li><a href="{{ url_for('index') }}">Inicio</a></li>
                 <li><a href="https://platzi.com" target="_blank">Platzi</a></li>
                 <li><a href="{{url_for('serv_error') }}">Error-500</a></li>
+                {% if current_user.is_authenticated is not defined %}
+                    <li><a href="{{url_for('auth.signup')}}">Signup</a></li>
+                {% endif %}
+                {% if current_user.is_authenticated %}
+                        <li><a href="{{url_for('auth.logout')}}">Logout</a></li>
+                {% endif %}
             </ul>
         </div>
     </div>

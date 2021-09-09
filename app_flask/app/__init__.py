@@ -1,8 +1,9 @@
 from flask import Flask
 from flask_bootstrap import Bootstrap
+from flask_login import LoginManager
+
 from .config import Config
 from .auth import auth
-from flask_login import LoginManager
 from .models import UserModel
 
 login_manager = LoginManager()
@@ -18,11 +19,13 @@ def load_user(username):
 def create_app():
     app = Flask(__name__)
     bootstrap = Bootstrap(app) #Inicializacion de la extension bootstrap
-    # Ya se tiene acceso a los archivos HTML, CSS y JS 
+    # Ya se tiene acceso a los archivos HTML, CSS y JS
 
     app.config.from_object(Config) # Necesario para hacer uso de la sesion
-    
+
+    login_manager.init_app(app)#Inicializar el administrador de logins en la app
+
     app.register_blueprint(auth)
-    
+
     return app
 

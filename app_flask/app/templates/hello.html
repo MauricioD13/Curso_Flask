@@ -23,18 +23,28 @@
             <a href="{{ url_for('index') }}">Ir a inicio</a>
         {% endif %}
     </div>
-    <div class='container-sm border'>
-        <div class="well well-lg">
-            <ul>
-                <div class="row">
+    <div class="container">
+        <h2>Agregar tarea</h2>
+        {{ wtf.quick_form(to_do_form) }}
+    </div>
+    <div class='panel panel-default'>
+        <div class="panel heading"> <h2>To dos</h2></div>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Descripcion</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Actualizar</th>
+                        <th scope="col">Borrar</th>
+                    </tr>
+                </thead>
+                <tbody>
                     {%for text in to_do %}
-                        <div class="col-sm-4">
-                            {{macros.render_todo(text)}}  
-                        </div>
+                        {{macros.render_todo(text, delete_form, update_form)}}
                     {% endfor %}
-                </div>
-            </ul>
+                </tbody>
+            </table>
             
-        </div>
+
     </div>
 {% endblock %}

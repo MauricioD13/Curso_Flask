@@ -1,10 +1,10 @@
 import unittest
-from flask import request, redirect, render_template, session, make_response
-from flask_login import login_required
+from flask import request, redirect, render_template, session, flash, make_response, url_for
+from flask_login import login_required, current_user
 
 from app import create_app
-from app.firestore_service import get_users, get_to_dos
-
+from app.firestore_service import update_to_do, get_to_dos, put_to_do, delete_to_do
+from app.forms import To_doForm, DeleteTodoForm, UpdateForm
 
 app = create_app()
 
@@ -13,7 +13,7 @@ app = create_app()
 def test():
     """Usa la libreria unittest para correr scripts para hacer testing
     Todos los scripts que se encuentren en la carpeta test y 
-    comiencen con test serán ejecutados
+    comiencen con la palabra test serán ejecutados
     """
     tests = unittest.TestLoader().discover('tests')
     unittest.TextTestRunner().run(tests)
@@ -43,7 +43,7 @@ def index():
     return response
 
 
-@app.route('/hello', methods=['GET'])
+@app.route('/hello', methods=['GET','POST'])
 @login_required
 def hello():
     """Método que se usa para:
@@ -53,18 +53,38 @@ def hello():
         [method]:Pasar parametros por medio de un diccionario al html y renderizar HTML 
     """
     user_ip = session.get('user_ip')
-    username = session.get('username')
-
+    username = current_user.id
+    to_do_form = To_doForm()
+    delete_form = DeleteTodoForm()
+    update_form = UpdateForm()
     context = {
         'user_ip': user_ip,
-        'to_do': get_to_dos(user_id='mauro'),
-        'username': username
+        'to_do': get_to_dos(user_id=username),
+        'username': username,
+        'to_do_form': to_do_form,
+        'delete_form' : delete_form,
+        'update_form' : update_form
     }
+    if to_do_form.validate_on_submit():
 
-    users = get_users()
-
+        put_to_do(username, to_do_form.description.data)
+        flash('Tarea creada con exito')
+        return redirect(url_for('hello'))
+        
     return render_template('hello.html', **context)
 
+#Rutas dinamicas que cambian segun un parametro
+@app.route('/todos/delete/<todo_id>', methods=['POST'])
+def delete(todo_id):
+    user_id = current_user.id
+    delete_to_do(user_id=user_id, todo_id=todo_id)
+    return redirect(url_for('hello'))
+
+@app.route('/todos/update/<todo_id>/<int:done>', methods = ['POST'])
+def update(todo_id, done):
+    user_id = current_user.id
+    update_to_do(user_id, todo_id, done)
+    return redirect(url_for('hello'))
 
 @app.route('/server')
 def serv_error():

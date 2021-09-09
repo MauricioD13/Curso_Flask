@@ -204,3 +204,5 @@ Ejemplo en con firestore de GCP
    1. En el archivo __init__ de la aplicacion
    2. Instanciar la clase y decirle la ruta donde se hara el login('auth.login' en nuestro caso)
 2. Cargar al usuario
+   1. Para ello se usa UserMixin debido a que tiene los metodos necesarios que requiere flask-login
+   2. 
